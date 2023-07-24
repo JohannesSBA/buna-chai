@@ -7,6 +7,7 @@ import Button from "./Button";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "react-toastify";
 
 interface AddFriendButtonProps {}
 
@@ -53,7 +54,10 @@ const AddFriendButton: FC<AddFriendButtonProps> = ({}) => {
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="max-w-sm">
+        <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="max-w-sm text-transparent"
+        >
             <label
                 htmlFor="email"
                 className="block text-sm font-medium leading-6 text-gray-900"
@@ -70,12 +74,8 @@ const AddFriendButton: FC<AddFriendButtonProps> = ({}) => {
                 />
                 <Button>Add</Button>
             </div>
-            <p className="mt-1 text-sm text-red-600">{errors.email?.message}</p>
-            {showSuccessState ? (
-                <p className="mt-1 text-sm text-green-600">
-                    Friend request sent!
-                </p>
-            ) : null}
+            {errors.email ? toast.error(`${errors.email?.message}`) : null}
+            {showSuccessState ? toast.success("Friend request sent", {}) : null}
         </form>
     );
 };
