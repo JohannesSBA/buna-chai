@@ -90,6 +90,7 @@ const chat = async ({ params }: chatProps) => {
             </div>
             <Messages
                 sessionId={session.user.id}
+                chatId={chatid}
                 initalMessage={initalMessage}
                 chatPartner={chatPartner}
                 sessionImg={session.user.image}

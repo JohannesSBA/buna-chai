@@ -20,35 +20,35 @@ const FriendRequests: FunctionComponent<FriendRequestsProps> = ({
         IncomingFriendRequest[]
     >(incomingFriendRequests);
 
-    // useEffect(() => {
-    //     pusherClient.subscribe(
-    //         toPusherKey(`user:${sessionId}:incoming_friend_requests`)
-    //     );
-    //     console.log(
-    //         "listening to ",
-    //         `user:${sessionId}:incoming_friend_requests`
-    //     );
+    useEffect(() => {
+        pusherClient.subscribe(
+            toPusherKey(`user:${sessionId}:incoming_friend_requests`)
+        );
+        console.log(
+            "listening to ",
+            `user:${sessionId}:incoming_friend_requests`
+        );
 
-    //     const friendRequestHandler = ({
-    //         senderId,
-    //         senderEmail,
-    //     }: IncomingFriendRequest) => {
-    //         console.log("function got called");
-    //         setFriendRequests((prev) => [...prev, { senderId, senderEmail }]);
-    //     };
+        const friendRequestHandler = ({
+            senderId,
+            senderEmail,
+        }: IncomingFriendRequest) => {
+            console.log("function got called");
+            setFriendRequests((prev) => [...prev, { senderId, senderEmail }]);
+        };
 
-    //     pusherClient.bind("incoming_friend_requests", friendRequestHandler);
+        pusherClient.bind("incoming_friend_requests", friendRequestHandler);
 
-    //     return () => {
-    //         pusherClient.unsubscribe(
-    //             toPusherKey(`user:${sessionId}:incoming_friend_requests`)
-    //         );
-    //         pusherClient.unbind(
-    //             "incoming_friend_requests",
-    //             friendRequestHandler
-    //         );
-    //     };
-    // }, [sessionId]);
+        return () => {
+            pusherClient.unsubscribe(
+                toPusherKey(`user:${sessionId}:incoming_friend_requests`)
+            );
+            pusherClient.unbind(
+                "incoming_friend_requests",
+                friendRequestHandler
+            );
+        };
+    }, [sessionId]);
 
     const acceptFriend = async (senderId: string) => {
         await axios.post("/api/friends/accept", { id: senderId });
