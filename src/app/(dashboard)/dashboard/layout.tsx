@@ -64,7 +64,7 @@ const Layout: FunctionComponent<LayoutProps> = async ({ children }) => {
                     <ul role="list" className="flex flex-1 flex-col gap-y-7">
                         <li>
                             <SideBarChatList
-                                session={session.user.id}
+                                sessionId={session.user.id}
                                 friends={friends}
                             />
                         </li>

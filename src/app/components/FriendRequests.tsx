@@ -25,7 +25,7 @@ const FriendRequests: FunctionComponent<FriendRequestsProps> = ({
     //         toPusherKey(`user:${sessionId}:incoming_friend_requests`)
     //     );
     //     console.log(
-    //         "subscribed to  ",
+    //         "listening to ",
     //         `user:${sessionId}:incoming_friend_requests`
     //     );
 
@@ -33,10 +33,11 @@ const FriendRequests: FunctionComponent<FriendRequestsProps> = ({
     //         senderId,
     //         senderEmail,
     //     }: IncomingFriendRequest) => {
+    //         console.log("function got called");
     //         setFriendRequests((prev) => [...prev, { senderId, senderEmail }]);
     //     };
 
-    //     pusherClient.bind(`incoming_friend_requests`, friendRequestHandler);
+    //     pusherClient.bind("incoming_friend_requests", friendRequestHandler);
 
     //     return () => {
     //         pusherClient.unsubscribe(
@@ -47,7 +48,7 @@ const FriendRequests: FunctionComponent<FriendRequestsProps> = ({
     //             friendRequestHandler
     //         );
     //     };
-    // });
+    // }, [sessionId]);
 
     const acceptFriend = async (senderId: string) => {
         await axios.post("/api/friends/accept", { id: senderId });
