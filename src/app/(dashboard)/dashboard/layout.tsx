@@ -9,6 +9,7 @@ import FriendRequestsSidebarOption from "@/app/components/FriendRequestsSidebarO
 import Image from "next/image";
 import { fetchRedis } from "@/helpers/redis";
 import { getFriendsByUserId } from "@/helpers/get-friends-by-user-id";
+import SideBarChatList from "@/app/components/SideBarChatList";
 
 interface LayoutProps {
     children: ReactNode;
@@ -61,6 +62,12 @@ const Layout: FunctionComponent<LayoutProps> = async ({ children }) => {
 
                 <nav className="flex flex-1 flex-col">
                     <ul role="list" className="flex flex-1 flex-col gap-y-7">
+                        <li>
+                            <SideBarChatList
+                                session={session.user.id}
+                                friends={friends}
+                            />
+                        </li>
                         <li>
                             <div className="text-xs font-semibold leading-6 text-gray-400">
                                 Overview
