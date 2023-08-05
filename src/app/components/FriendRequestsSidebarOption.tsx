@@ -21,10 +21,6 @@ const FriendRequestsSidebarOption: FunctionComponent<
         pusherClient.subscribe(
             toPusherKey(`user:${sessionId}:incoming_friend_requests`)
         );
-        console.log(
-            "subscribed to  ",
-            `user:${sessionId}:incoming_friend_requests`
-        );
 
         const friendRequestHandler = () => {
             setUnseenRequestCount((prev) => prev + 1);
@@ -51,7 +47,7 @@ const FriendRequestsSidebarOption: FunctionComponent<
                 <User className="h-4 w-4" />
             </div>
             <p className="truncate">Friend requests</p>
-            {unseenRequestCount > -1 ? (
+            {unseenRequestCount > 0 ? (
                 <div className="rounded-full w-5 h-5 text-xs flex justify-center items-center text-white bg-red-600">
                     {unseenRequestCount}
                 </div>

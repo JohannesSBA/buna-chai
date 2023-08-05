@@ -10,16 +10,12 @@ import Image from "next/image";
 import { fetchRedis } from "@/helpers/redis";
 import { getFriendsByUserId } from "@/helpers/get-friends-by-user-id";
 import SideBarChatList from "@/app/components/SideBarChatList";
+import MobileChatLayout from "@/app/components/MobileChatLayout";
+import { SidebarOption } from "@/types/typings";
+import { UserPlus } from "lucide-react";
 
 interface LayoutProps {
     children: ReactNode;
-}
-
-interface SidebarOption {
-    id: number;
-    name: string;
-    href: string;
-    Icon: Icon;
 }
 
 const sidebarOptions: SidebarOption[] = [
@@ -46,6 +42,14 @@ const Layout: FunctionComponent<LayoutProps> = async ({ children }) => {
 
     return (
         <div className="w-full flex h-screen">
+            <div className="md:hidden">
+                <MobileChatLayout
+                    friends={friends}
+                    session={session}
+                    unseenRequestCount={unseenRequestCount}
+                    sidebarOptions={sidebarOptions}
+                />
+            </div>
             <div className="hidden md:flex h-full w-full max-w-xs grow flex-col gap-y-5 overflow-y-auto border-r border-gray-100 dark:border-gray-900 px-6">
                 <Link
                     href="/dashboard"
@@ -135,7 +139,7 @@ const Layout: FunctionComponent<LayoutProps> = async ({ children }) => {
                 </nav>
             </div>
 
-            <aside className="max-h-screen container py-16 md:py-12 w-full">
+            <aside className="max-h-screen container center py-16 md:py-12 w-full">
                 {children}
             </aside>
         </div>

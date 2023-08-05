@@ -88,7 +88,7 @@ const FriendRequests: FunctionComponent<FriendRequestsProps> = ({
                         <button
                             onClick={() => acceptFriend(request.senderId)}
                             arira-aria-label="accept friend"
-                            className="w-8 h-8 bg-red-600 hover:bg-red-700 grid place-items-center rounded0full transition hover:shadow-md"
+                            className="w-8 h-8 bg-red-600 hover:bg-red-700 grid place-items-center rounded-full transition hover:shadow-md"
                         >
                             <Check className="font-semibold text-white w-3/4 h-3/4" />
                         </button>
