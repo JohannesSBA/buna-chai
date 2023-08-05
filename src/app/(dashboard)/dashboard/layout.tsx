@@ -55,7 +55,7 @@ const Layout: FunctionComponent<LayoutProps> = async ({ children }) => {
                     href="/dashboard"
                     className="flex h-16 shrink-0 items-center justify-center p-5"
                 >
-                    LOGO
+                    BunaChai
                 </Link>
 
                 {friends.length > 0 ? (

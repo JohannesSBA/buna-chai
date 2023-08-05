@@ -43,7 +43,7 @@ const MobileChatLayout: FC<MobileChatLayoutProps> = ({
         <div className="fixed bg-zinc-50 border-b border-zinc-200 top-0 inset-x-0 py-2 px-4">
             <div className="w-full flex justify-between items-center">
                 <Link href="/dashboard">
-                    <h1>Logo</h1>
+                    <h1>bunaChai</h1>
                 </Link>
                 <Button onClick={() => setOpen(true)} className="gap-4">
                     Menu <Menu className="h-6 w-6" />
