@@ -1,26 +1,28 @@
 "use client";
-import { cn, toPusherKey } from "@/lib/utils";
-import { format } from "date-fns";
-import { FunctionComponent, useEffect, useRef, useState } from "react";
-import Image from "next/image";
+
 import { pusherClient } from "@/lib/pusher";
+import { cn, toPusherKey } from "@/lib/utils";
+import { Message } from "@/lib/validations/message";
+import { format } from "date-fns";
+import Image from "next/image";
+import { FC, useEffect, useRef, useState } from "react";
 
 interface MessagesProps {
-    initalMessage: Message[];
+    initialMessages: Message[];
     sessionId: string;
+    chatId: string;
     sessionImg: string | null | undefined;
     chatPartner: User;
-    chatId: string;
 }
 
-const Messages: FunctionComponent<MessagesProps> = ({
-    initalMessage,
+const Messages: FC<MessagesProps> = ({
+    initialMessages,
     sessionId,
     chatId,
-    sessionImg,
     chatPartner,
+    sessionImg,
 }) => {
-    const [messages, setMessages] = useState<Message[]>(initalMessage);
+    const [messages, setMessages] = useState<Message[]>(initialMessages);
 
     useEffect(() => {
         pusherClient.subscribe(toPusherKey(`chat:${chatId}`));
@@ -35,13 +37,14 @@ const Messages: FunctionComponent<MessagesProps> = ({
             pusherClient.unsubscribe(toPusherKey(`chat:${chatId}`));
             pusherClient.unbind("incoming-message", messageHandler);
         };
-    }, []);
+    }, [chatId]);
 
     const scrollDownRef = useRef<HTMLDivElement | null>(null);
 
-    const formatTimeStamp = (timeStamp: number) => {
-        return format(timeStamp, "HH:mm");
+    const formatTimestamp = (timestamp: number) => {
+        return format(timestamp, "HH:mm");
     };
+
     return (
         <div
             id="messages"
@@ -56,7 +59,10 @@ const Messages: FunctionComponent<MessagesProps> = ({
                     messages[index - 1]?.senderId === messages[index].senderId;
 
                 return (
-                    <div key={`${message.id}-${message.timestamp}`}>
+                    <div
+                        className="chat-message"
+                        key={`${message.id}-${message.timestamp}`}
+                    >
                         <div
                             className={cn("flex items-end", {
                                 "justify-end": isCurrentUser,
@@ -80,7 +86,7 @@ const Messages: FunctionComponent<MessagesProps> = ({
                                             "bg-gray-200 text-gray-900":
                                                 !isCurrentUser,
                                             "rounded-br-none":
-                                                hasNextMessageFromSameUser &&
+                                                !hasNextMessageFromSameUser &&
                                                 isCurrentUser,
                                             "rounded-bl-none":
                                                 !hasNextMessageFromSameUser &&
@@ -89,8 +95,8 @@ const Messages: FunctionComponent<MessagesProps> = ({
                                     )}
                                 >
                                     {message.text}{" "}
-                                    <span className="m1-2 text-xs text-gray-400">
-                                        {formatTimeStamp(message.timestamp)}{" "}
+                                    <span className="ml-2 text-xs text-gray-400">
+                                        {formatTimestamp(message.timestamp)}
                                     </span>
                                 </span>
                             </div>
@@ -109,10 +115,10 @@ const Messages: FunctionComponent<MessagesProps> = ({
                                             ? (sessionImg as string)
                                             : chatPartner.image
                                     }
-                                    alt={"profile picture"}
+                                    alt="Profile picture"
                                     referrerPolicy="no-referrer"
                                     className="rounded-full"
-                                ></Image>
+                                />
                             </div>
                         </div>
                     </div>

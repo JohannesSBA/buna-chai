@@ -46,6 +46,7 @@ export async function POST(req: Request) {
             senderId: session.user.id,
             text,
             timestamp,
+            receiverId: "",
         };
 
         const message = messageValidator.parse(messageData);
